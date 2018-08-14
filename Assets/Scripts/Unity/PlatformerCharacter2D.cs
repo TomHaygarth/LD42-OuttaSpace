@@ -1,4 +1,5 @@
 using System;
+using OuttaSpace.Weapon;
 using UnityEngine;
 
 namespace UnityStandardAssets._2D
@@ -10,6 +11,10 @@ namespace UnityStandardAssets._2D
         [Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;  // Amount of maxSpeed applied to crouching movement. 1 = 100%
         [SerializeField] private bool m_AirControl = false;                 // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask m_WhatIsGround;                  // A mask determining what is ground to the character
+        [SerializeField] private IWeapon selectedWeapon;
+        [SerializeField] private float stunTime = 1.0f;
+
+        public float Damage { get; private set; }
 
         private Transform m_GroundCheck;    // A position marking where to check if the player is grounded.
         const float k_GroundedRadius = .2f; // Radius of the overlap circle to determine if grounded
@@ -19,6 +24,8 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+
+        private float m_stunDuration = 0.0f;
 
         private void Awake()
         {
@@ -47,6 +54,10 @@ namespace UnityStandardAssets._2D
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
+
+            if(m_stunDuration > 0.0f) {
+                m_stunDuration -= Time.fixedDeltaTime;
+            }
         }
 
 
@@ -66,7 +77,7 @@ namespace UnityStandardAssets._2D
             m_Anim.SetBool("Crouch", crouch);
 
             //only control the player if grounded or airControl is turned on
-            if (m_Grounded || m_AirControl)
+            if ((m_Grounded || m_AirControl) && m_stunDuration <= 0.0f)
             {
                 // Reduce the speed if crouching by the crouchSpeed multiplier
                 move = (crouch ? move*m_CrouchSpeed : move);
@@ -110,6 +121,20 @@ namespace UnityStandardAssets._2D
             Vector3 theScale = transform.localScale;
             theScale.x *= -1;
             transform.localScale = theScale;
+            selectedWeapon.SetDirection(m_FacingRight);
+        }
+
+        public void Attack() {
+            if(selectedWeapon.IsReady) {
+                selectedWeapon.Fire();
+            }
+        }
+
+        public void ReceiveDamage(float damage, Vector2 direction) {
+            Damage += damage;
+
+            m_stunDuration = stunTime * Damage;
+            m_Rigidbody2D.AddForce(direction * damage);
         }
     }
 }
