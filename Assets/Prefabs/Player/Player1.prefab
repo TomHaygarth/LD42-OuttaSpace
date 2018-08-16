@@ -103,8 +103,7 @@ GameObject:
   - component: {fileID: 50920581693436548}
   - component: {fileID: 114296394411026378}
   - component: {fileID: 114722885865926676}
-  - component: {fileID: 58165812525661374}
-  - component: {fileID: 61972083345521144}
+  - component: {fileID: 70486420100228016}
   m_Layer: 8
   m_Name: Player1
   m_TagString: Untagged
@@ -202,7 +201,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1852564538844594}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.1242431, y: -1.2879245, z: 0}
+  m_LocalPosition: {x: 1.1236, y: 3.0307, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4438936436764628}
@@ -236,7 +235,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -244,21 +243,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!58 &58165812525661374
-CircleCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1852564538844594}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.3}
-  serializedVersion: 2
-  m_Radius: 0.36
 --- !u!61 &61426309496134410
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -269,7 +253,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.3}
   m_SpriteTilingProperty:
@@ -284,8 +268,8 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.15, y: 0.4}
   m_EdgeRadius: 0
---- !u!61 &61972083345521144
-BoxCollider2D:
+--- !u!70 &70486420100228016
+CapsuleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -296,19 +280,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.05}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.94285715, y: 1.3142858}
-    newSize: {x: 0.66, y: 0.92}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.72, y: 1.2}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.94285715, y: 1.3142858}
+  m_Direction: 0
 --- !u!95 &95038020491145722
 Animator:
   serializedVersion: 3
@@ -356,7 +330,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 95038020491145722}
   hitForce: 1000
-  reloadTime: 0.2
   damage: 0.05
   swordTip: {fileID: 4844976856268642}
   hitDirection: {x: 1, y: 1.5}
@@ -372,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxSpeed: 10
-  m_JumpForce: 800
+  m_JumpForce: 500
   m_CrouchSpeed: 0.36
   m_AirControl: 1
   m_WhatIsGround:
